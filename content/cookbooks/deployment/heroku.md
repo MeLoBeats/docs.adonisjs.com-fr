@@ -5,14 +5,14 @@ avatarUrl: https://res.cloudinary.com/adonis-js/image/upload/v1619103621/adonisj
 summary: Cookbook to deploy AdonisJS application to Heroku
 ---
 
-This guide covers the action steps for deploying an AdonisJS application to [Heroku](https://devcenter.heroku.com/articles/deploying-nodejs).
+Ce guide couvre les étapes à suivre pour déployer une application AdonisJS sur [Heroku](https://devcenter.heroku.com/articles/deploying-nodejs).
 
-Deploying an AdonisJS application is no different from deploying a standard Node.js application. You just have to keep a few things in mind:
+Le déploiement d'une application AdonisJS ne diffère pas du déploiement d'une application Node.js standard. Vous devez simplement garder quelques points à l'esprit :
 
-- You build your TypeScript source to JavaScript, before deploying the app.
-- You will have to start the server from the `build` folder and not the project root. Same is true for running migrations any other Node.js apps.
+- Vous devez compiler votre code TypeScript en JavaScript avant de déployer l'application.
+- Vous devrez démarrer le serveur à partir du dossier `build` et non de la racine du projet. Il en va de même pour l'exécution des migrations ou de toute autre application Node.js.
 
-You can build your project for production by running the following ace command. Learn more about the [TypeScript build process](../../guides/fundamentals/typescript-build-process.md)
+Vous pouvez compiler votre projet pour la production en exécutant la commande ace suivante. En savoir plus sur le [processus de compilation TypeScript](../../guides/fundamentals/typescript-build-process.md)
 
 ```sh
 node ace build --production
@@ -21,42 +21,42 @@ node ace build --production
 npm run build
 ```
 
-## Adding the Procfile
-Before you push your code to Heroku for deployment, make sure to create a [Procfile](https://devcenter.heroku.com/articles/procfile#deploying-to-heroku) in the root of your application.
+## Ajout du Procfile
+Avant de pousser votre code vers Heroku pour le déploiement, assurez-vous de créer un [Procfile](https://devcenter.heroku.com/articles/procfile#deploying-to-heroku) à la racine de votre application.
 
-The file instructs Heroku always to run the migrations during the release and start the server from the `build` folder.
+Ce fichier indique à Heroku d'exécuter toujours les migrations lors de la release et de démarrer le serveur à partir du dossier `build`.
 
 ```text
 web: node build/server.js
 release: node build/ace migration:run --force
 ```
 
-## Defining environment variables
-You must also define the environment variables in the Heroku dashboard. You can consult the development `.env` for the variables you have to define with Heroku.
+## Définition des variables d'environnement
+Vous devez également définir les variables d'environnement dans le tableau de bord Heroku. Vous pouvez consulter le fichier `.env` de développement pour connaître les variables que vous devez définir avec Heroku.
 
-- Do not define the `PORT` environment variable. Heroku will define it for you automatically.
-- Make sure to generate the app key by running the `node ace generate:key` command and define it as `APP_KEY` environment variable.
-- Save the `APP_KEY` securely. If you lose this key, all the encryption data, cookies, and sessions will become invalid.
+- Ne définissez pas la variable d'environnement `PORT`. Heroku la définira automatiquement pour vous.
+- Assurez-vous de générer la clé de l'application en exécutant la commande `node ace generate:key` et de la définir comme variable d'environnement `APP_KEY`.
+- Sauvegardez la clé `APP_KEY` de manière sécurisée. Si vous perdez cette clé, toutes les données de chiffrement, les cookies et les sessions deviendront invalides.
 
 ![](https://res.cloudinary.com/adonis-js/image/upload/f_auto,q_auto/v1619085409/v5/heroku-env-vars.jpg)
 
-## Time to deploy
-You can now push your code to Heroku by running the `git push heroku master` command. Heroku will perform the following steps for you.
+## Il est temps de déployer
+Vous pouvez maintenant pousser votre code vers Heroku en lançant la commande `git push heroku master`. Heroku effectuera les étapes suivantes pour vous.
 
-- It will detect your application as a Node.js app and use the `heroku/nodejs` buildpack to build and deploy it.
-- It will detect the `build` script inside the `package.json` file and build your TypeScript code to JavaScript. **You must always run the JavaScript code in production**.
-- Post-build, it will [prune](https://docs.npmjs.com/cli/v7/commands/npm-prune) the development dependencies.
-- Runs the `release` script defined inside the `Procfile`.
-- Runs the `web` script defined inside the `Procfile`.
+- Il détectera votre application comme étant une application Node.js et utilisera le buildpack `heroku/nodejs` pour la construire et la déployer.
+- Il détectera le script `build` dans le fichier `package.json` et construira votre code TypeScript en JavaScript. **Vous devez toujours exécuter le code JavaScript en production**.
+- Après la construction, il va [prune](https://docs.npmjs.com/cli/v7/commands/npm-prune) les dépendances de développement.
+- Exécute le script `release` défini dans le `Procfile`.
+- Exécute le script `web` défini dans le `Procfile`.
 
-## Using database
-You can use the Heroku add-ons to add a database to your application. Just make sure to define the required environment variables for AdonisJS to connect to your database.
+## Utilisation de la base de données
+Vous pouvez utiliser les modules complémentaires Heroku pour ajouter une base de données à votre application. Assurez-vous simplement de définir les variables d'environnement nécessaires pour qu'AdonisJS puisse se connecter à votre base de données.
 
-Again, you can again consult the development `.env` to view the name of the environment variables you are using for database connection.
+Encore une fois, vous pouvez consulter le `.env` de développement pour voir le nom des variables d'environnement que vous utilisez pour la connexion à la base de données.
 
 :::note
 
-If you are using PostgreSQL and getting `pg_hba.conf` error. Then make sure to enable SSL certificates for your app. If you cannot enable SSL, you must update the database connection to allow non-SSL connections.
+Si vous utilisez PostgreSQL et que vous obtenez l'erreur `pg_hba.conf`. Assurez-vous alors d'activer les certificats SSL pour votre application. Si vous ne pouvez pas activer SSL, vous devez mettre à jour la connexion à la base de données pour autoriser les connexions non-SSL.
 
 ```ts
 // title: config/database.js
@@ -73,7 +73,7 @@ pg: {
 
 :::
 
-## Managing user uploaded files
-Heroku does not have [persistent storage](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), and you cannot save the user uploaded files on the server filesystem. This leaves you with only one option of saving the uploaded files to an external service like S3.
+## Gestion des fichiers téléchargés par les utilisateurs
+Heroku ne dispose pas de [stockage persistant](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), et vous ne pouvez pas sauvegarder les fichiers téléchargés par l'utilisateur sur le système de fichiers du serveur. Il ne vous reste donc qu'une seule option : sauvegarder les fichiers téléchargés sur un service externe tel que S3.
 
-We are currently working on a module that allows you to use the local filesystem during development and then switch to an external filesystem like S3 for production. Do all this without changing a single line of code.
+Nous travaillons actuellement sur un module qui vous permet d'utiliser le système de fichiers local pendant le développement et de passer ensuite à un système de fichiers externe comme S3 pour la production. Tout cela sans changer une seule ligne de code.

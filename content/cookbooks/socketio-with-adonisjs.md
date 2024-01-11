@@ -2,12 +2,12 @@
 datetime: 2020-06-08
 author: Virk
 avatarUrl: https://res.cloudinary.com/adonis-js/image/upload/v1619103621/adonisjs-authors-avatars/DYO4KUru_400x400_shujhw.jpg
-summary: Learn how to use socket.io with AdonisJS
+summary: Apprenez comment utiliser socket.io avec AdonisJS
 ---
 
-[Socket.io](https://socket.io/) is a very popular library for real-time and bidirectional communication. In this guide, we will learn how to use socket.io with AdonisJS.
+[Socket.io](https://socket.io/) est une bibliothèque très populaire pour la communication bidirectionnelle et en temps réel. Dans ce guide, nous allons apprendre à utiliser socket.io avec AdonisJS.
 
-The first step is to install the package from the npm package registry.
+La première étape consiste à installer le package depuis le registre des packages npm.
 
 :::codegroup
 
@@ -22,9 +22,9 @@ yarn add socket.io
 ```
 :::
 
-Next, let's create a service class responsible for starting the socketio server and provide us a reference to it.
+Ensuite, créons une classe de service responsable du démarrage du serveur socketio et nous fournissant une référence à celui-ci.
 
-The code for the service can be anywhere inside your codebase. I prefer keeping it inside the `./app/Services` directory.
+Le code du service peut être n'importe où dans votre code source. Je préfère le garder à l'intérieur du répertoire `./app/Services`.
 
 ```ts
 // title: app/Services/Ws.ts
@@ -51,7 +51,7 @@ class Ws {
 export default new Ws()
 ```
 
-Next, let's create a `start/socket.ts` file and paste the following contents inside it. Like the `routes` file, we will use this file to listen to the incoming socket connections.
+Ensuite, créons un fichier `start/socket.ts` et collons-y le contenu suivant. Comme le fichier `routes`, nous utiliserons ce fichier pour écouter les connexions socket entrantes.
 
 ```ts
 // title: start/socket.ts
@@ -70,9 +70,9 @@ Ws.io.on('connection', (socket) => {
 })
 ```
 
-Finally, import the above-created file inside the `providers/AppProvider.ts` file under the `ready` method. 
+Enfin, importez le fichier créé ci-dessus dans le fichier `providers/AppProvider.ts` sous la méthode `ready`.
 
-The `ready` method runs after the AdonisJS HTTP server is ready, and this is when we should establish the socketio connection.
+La méthode `ready` s'exécute après que le serveur HTTP AdonisJS soit prêt, et c'est à ce moment que nous devons établir la connexion socketio.
 
 ```ts
 // title: providers/AppProvider.ts
@@ -89,10 +89,10 @@ export default class AppProvider {
 }
 ```
 
-That's all you need to do to set up socket.io. Let's take a step further and also test that we can establish a connection from the browser.
+C'est tout ce que vous devez faire pour configurer socket.io. Allons plus loin et testons également que nous pouvons établir une connexion à partir du navigateur.
 
-## Client setup
-We will use the CDN build of socketio-client to keep things simple. Let's open the `resources/views/welcome.edge` and add the following scripts to the page.
+## Configuration du client
+Nous utiliserons la version CDN de socketio-client pour simplifier les choses. Ouvrons le fichier `resources/views/welcome.edge` et ajoutons les scripts suivants à la page.
 
 ```edge
 // title: resources/views/welcome.edge
@@ -114,12 +114,12 @@ We will use the CDN build of socketio-client to keep things simple. Let's open t
 </html>
 ```
 
-Let's start the development server by running `node ace serve --watch` and open [http://localhost:3333](http://localhost:3333) in the browser to test the integration.
+Commençons par démarrer le serveur de développement en exécutant `node ace serve --watch` et ouvrons [http://localhost:3333](http://localhost:3333) dans le navigateur pour tester l'intégration.
 
 ::video{url="https://res.cloudinary.com/adonis-js/video/upload/v1591543846/adonisjs.com/blog/socket-io_i4qe6n.mp4" controls}
 
-## Broadcast from anywhere
-Since we have abstracted the socketio setup to a service class, you can import it from anywhere inside your codebase to broadcast events. For example:
+## Diffusez de n'importe où
+Depuis que nous avons abstrait la configuration socketio dans une classe de service, vous pouvez l'importer de n'importe où dans votre code pour diffuser des événements. Par exemple:
 
 ```ts
 import Ws from 'App/Services/Ws'
@@ -131,10 +131,12 @@ class UsersController {
 }
 ```
 
-## Configure CORS
-The socketio connection uses the underlying Node.js HTTP server directly, and hence the AdonisJS CORS setup will not work with it.
+## Configurer CORS
+La connexion socketio utilise directement le serveur HTTP sous-jacent de Node.js, et donc la configuration CORS d'AdonisJS ne fonctionnera pas avec elle.
 
-However, you can configure [cors with socketio directly](https://socket.io/docs/v4/handling-cors/) as follows.
+Vous pouvez cependant configurer [cors avec socketio directement](https://socket.io/docs/v4/handling-cors/) comme ceci.
+
+```ts
 
 ```ts
 class Ws {

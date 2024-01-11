@@ -5,39 +5,39 @@ avatarUrl: https://res.cloudinary.com/adonis-js/image/upload/v1619103621/adonisj
 summary: Cookbook to deploy AdonisJS application to Digital ocean apps platform
 ---
 
-This guide covers the action steps for deploying an AdonisJS application to [Digital ocean apps platform](https://docs.digitalocean.com/products/app-platform/).
+Ce guide couvre les étapes du déploiement d'une application AdonisJS sur [Digital ocean apps platform](https://docs.digitalocean.com/products/app-platform/).
 
-Deploying an AdonisJS application is no different from deploying a standard Node.js application. You just have to keep a few things in mind:
+Le déploiement d'une application AdonisJS ne diffère pas du déploiement d'une application Node.js standard. Vous devez simplement garder quelques éléments à l'esprit :
 
-- You build your TypeScript source to JavaScript, before deploying the app.
-- You will have to start the server from the `build` folder and not the project root. Same is true for running migrations any other Node.js apps.
+- Vous construisez votre source TypeScript en JavaScript, avant de déployer l'application.
+- Vous devrez démarrer le serveur à partir du dossier `build` et non de la racine du projet. Il en va de même pour l'exécution de migrations ou d'autres applications Node.js.
 
-You can build your project for production by running the following ace command. Learn more about the [TypeScript build process](../../guides/fundamentals/typescript-build-process.md)
+Vous pouvez construire votre projet pour la production en lançant la commande ace suivante. En savoir plus sur le [processus de construction TypeScript](../../guides/fundamentals/typescript-build-process.md)
 
 ```sh
 node ace build --production
 
-# OR use the npm script
+# OU utiliser le script npm
 npm run build
 ```
 
-## Configuring the DO App
+## Configuration de l'application DO
 
-At the time of deploying your application to the DO apps platform, you will be prompted to provide the environment. You can consult the development `.env` file for the variables you must define.
+Au moment de déployer votre application sur la plateforme DO apps, il vous sera demandé de fournir l'environnement. Vous pouvez consulter le fichier `.env` de développement pour les variables que vous devez définir.
 
-- Define the `PORT` environment variable same as **HTTP port** you have selected in the settings.
-- Make sure to generate the app key by running the `node ace generate:key` command on your local machine and define it as `APP_KEY` environment variable.
-- Save the `APP_KEY` securely. If you lose this key, all the encryption data, cookies, and sessions will become invalid.
-- Make sure to change the **run command** to start the server from the build folder. `node build/server.js`.
+- Définissez la variable d'environnement `PORT` identique au **port HTTP** que vous avez sélectionné dans les paramètres.
+- Assurez-vous de générer la clé de l'application en lançant la commande `node ace generate:key` sur votre machine locale et définissez-la comme variable d'environnement `APP_KEY`.
+- Sauvegardez la `APP_KEY` de manière sécurisée. Si vous perdez cette clé, toutes les données d'encryptage, les cookies et les sessions deviendront invalides.
+- Assurez-vous de changer la **commande d'exécution** pour démarrer le serveur depuis le dossier de construction. `node build/server.js`.
 
 ![](https://res.cloudinary.com/adonis-js/image/upload/q_auto,f_auto/v1619105542/v5/do-start-screen.jpg)
 
-## Using database
-You can also add the database as a component to your app and then update the environment variables with the database credentials.
+## Utilisation de la base de données
+Vous pouvez également ajouter la base de données en tant que composant de votre application et mettre à jour les variables d'environnement avec les informations d'identification de la base de données.
 
-We find Digital ocean database environment variables very generic and recommend re-mapping them as follows:
+Nous trouvons que les variables d'environnement de la base de données de Digital ocean sont très génériques et nous recommandons de les réaffecter comme suit :
 
-#### Digital ocean injected env variables
+#### Variables env injectées dans l'océan numérique
 ```dotenv
 HOSTNAME=
 PORT=
@@ -46,21 +46,21 @@ PASSWORD=
 DATABASE=
 ```
 
-#### Re-mapping them to be specific
-You must re-map the environment variables to be more specific. For example
+#### Re-mapper les variables d'environnement pour les rendre plus spécifiques
+Vous devez redéfinir les variables d'environnement pour qu'elles soient plus spécifiques. Par exemple
 
 ![](https://res.cloudinary.com/adonis-js/image/upload/q_auto,f_auto/v1619105542/v5/do-remmaped-env-vars.jpg)
 
-### Running migrations
-Once you have added the database, you will have to add a new component of **"Job type"** and make sure to select **"Before every deploy"** as its lifecycle.
+### Exécution des migrations
+Une fois que vous avez ajouté la base de données, vous devrez ajouter un nouveau composant de **"Job type "** et vous assurer de sélectionner **"Before every deploy "** comme cycle de vie.
 
-Digital ocean will make you repeat the same process of a adding a new component, re-selecting repository and re-define the environment variables. However, this time we are adding a job and not a web service.
+Digital Ocean vous fera répéter le même processus d'ajout d'un nouveau composant, de re-sélection du référentiel et de redéfinition des variables d'environnement. Cependant, cette fois-ci, nous ajoutons un travail et non un service web.
 
-Also, make sure to update the **Run command** to `node build/ace make:migration --force`.
+Assurez-vous également de mettre à jour la **commande d'exécution** en `node build/ace make:migration --force`.
 
 ![](https://res.cloudinary.com/adonis-js/image/upload/q_auto,f_auto/v1619105809/v5/do-job-component.jpg)
 
-## Managing user uploaded files
-Digital ocean apps do not have persistent storage and hence you cannot save the user uploaded files on the server filesystem. This leaves you with only one option of saving the uploaded files to an external service like Digital ocean spaces.
+## Gérer les fichiers téléchargés par les utilisateurs
+Les applications Digital Ocean n'ont pas de stockage persistant et vous ne pouvez donc pas sauvegarder les fichiers téléchargés par les utilisateurs sur le système de fichiers du serveur. Il ne vous reste donc qu'une seule option : sauvegarder les fichiers téléchargés sur un service externe comme Digital ocean spaces.
 
-We are currently working on a module that allows you to use the local filesystem during development and then switch to an external filesystem like Digital ocean spaces for production. Do all this without changing a single line of code.
+Nous travaillons actuellement sur un module qui vous permet d'utiliser le système de fichiers local pendant le développement et de passer ensuite à un système de fichiers externe comme Digital ocean spaces pour la production. Tout cela sans changer une seule ligne de code.

@@ -6,14 +6,14 @@
         "name": "root",
         "docs": [
           {
-            "title": "Using socket.io",
+            "title": "Utiliser socket.io",
             "permalink": "socketio-with-adonisjs",
             "contentPath": "socketio-with-adonisjs.md"
           }
         ]
       },
       {
-        "name": "Deployment",
+        "name": "Déploiement",
         "docs": [
           {
             "title": "Heroku",
@@ -21,7 +21,7 @@
             "contentPath": "deployment/heroku.md"
           },
           {
-            "title": "Digital ocean apps",
+            "title": "Applications Digital ocean",
             "permalink": "deploy-to-digial-ocean",
             "contentPath": "deployment/digial-ocean.md"
           },
@@ -31,7 +31,7 @@
             "contentPath": "deployment/cleavr.md"
           },
           {
-            "title": "Dockerizing Adonis",
+            "title": "Dockeriser avec Adonis",
             "permalink": "dockerizing-adonis",
             "contentPath": "deployment/dockerizing-adonis.md"
           },
@@ -46,7 +46,7 @@
         "name": "Validator",
         "docs": [
           {
-            "title": "Validating server side forms",
+            "title": "Valider les formulaires côté serveur",
             "permalink": "validating-server-rendered-forms",
             "contentPath": "validator/validating-server-rendered-forms.md"
           }
@@ -56,12 +56,12 @@
         "name": "Database",
         "docs": [
           {
-            "title": "Using Knex Postgis with Lucid",
+            "title": "Utiliser Knex Postgis avec Lucid",
             "permalink": "using-knex-postgis-with-lucid",
             "contentPath": "database/using-knex-postgis-with-lucid.md"
           },
           {
-            "title": "Using Postgres custom type parsers",
+            "title": "Utiliser les analyseurs de type personnalisés Postgres",
             "permalink": "using-postgres-custom-type-parsers",
             "contentPath": "database/using-postgres-custom-type-parsers.md"
           }
@@ -71,7 +71,7 @@
         "name": "Auth",
         "docs": [
           {
-            "title": "Using Ally with API guard",
+            "title": "Utiliser Ally avec les API Guard",
             "permalink": "using-ally-with-api-guard",
             "contentPath": "auth/using-ally-with-api-guard.md"
           }
